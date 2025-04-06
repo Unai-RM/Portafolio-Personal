@@ -5,6 +5,7 @@ import React from 'react';
 import 'leaflet/dist/leaflet.css';
 import { getTranslation } from '../translations';
 import LanguageSwitcher from './components/LanguageSwitcher';
+import { Toaster, toast } from 'react-hot-toast';
 
 export default function Home() {
   const [locale, setLocale] = React.useState<'es' | 'en'>('es');
@@ -272,13 +273,20 @@ export default function Home() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    if (!form) {
+      console.error('Form element not found');
+      toast.error(getTranslation('contact.error', locale) + ': Form element not found');
+      return;
+    }
+
+    const formData = new FormData(form);
     const data = {
       name: formData.get('name'),
       email: formData.get('email'),
       message: formData.get('message'),
     };
-  
+
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -287,21 +295,33 @@ export default function Home() {
         },
         body: JSON.stringify(data),
       });
-  
-      if (response.ok) {
-        e.currentTarget.reset();
-        alert(getTranslation('contact.success', locale));
+
+      const result = await response.json();
+      
+      if (response.ok && result.success) {
+        form.reset();
+        toast.success(getTranslation('contact.success', locale) || 'Message sent successfully');
       } else {
-        throw new Error('Error sending message');
+        throw new Error(result.error || 'Error sending message');
       }
-    } catch (error) {
-      console.error('Error:', error);
-      alert(getTranslation('contact.error', locale));
+    } catch (error: any) {
+      toast.error(getTranslation('contact.error', locale) || 'Error sending message');
     }
   };
 
   return (
     <div className={styles.container}>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: '#333',
+            color: '#fff',
+            borderRadius: '8px',
+          },
+        }}
+      />
       {/* Navigation */}
       <nav className={styles.sectionAnchors}>
         <a href="#header" className={styles.anchor} title={getTranslation('hero.title', locale)}></a>
@@ -324,7 +344,7 @@ export default function Home() {
             {getTranslation('hero.description', locale)}
           </p>
           <div className={styles.socialLinks}>
-            <a href="https://github.com/Unai-Ricco" className={styles.socialLink} target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://github.com/Unai-RM" className={styles.socialLink} target="_blank" rel="noopener noreferrer">GitHub</a>
             <a href="https://linkedin.com/in/unairicco" className={styles.socialLink} target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a href="mailto:unai.ricco.moyano@gmail.com" className={styles.socialLink}>Email</a>
           </div>
@@ -430,7 +450,7 @@ export default function Home() {
                   </div>
                   <div>
                     <div>
-                      <a href="https://wa.me/34639835256" className={styles.contactLink} target="_blank" rel="noopener noreferrer" title="(+34) 639 635 256">
+                      <a href="https://wa.me/34639635256" className={styles.contactLink} target="_blank" rel="noopener noreferrer" title="(+34) 639 635 256">
                         <img src="/whatsapp.svg" alt="WhatsApp" className={styles.socialIcon} />
                       </a>
                     </div>
@@ -469,7 +489,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <p className={styles.copyright}>© Unai Ricco {new Date().getFullYear()}</p>
+        <p className={styles.copyright}> Unai Ricco {new Date().getFullYear()}</p>
       </section>
     </div>
   );

@@ -1,38 +1,41 @@
 import { NextResponse } from 'next/server';
 import sgMail from '@sendgrid/mail';
 
-// Configurar SendGrid
+// Configurar SendGrid con tu API key
 sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
 
 export async function POST(request: Request) {
   try {
-    const data = await request.json();
-    
+    const body = await request.json();
+    const { name, email, message } = body;
+
     const msg = {
-      to: 'tu_email@ejemplo.com', // Cambia esto a tu email
-      from: 'no-reply@ejemplo.com', // Usa un email válido
-      subject: 'Nuevo mensaje de portafolio',
-      text: `
-        Nombre: ${data.name}
-        Email: ${data.email}
-        Mensaje: ${data.message}
-      `,
+      to: 'unai.ricco.moyano@gmail.com',
+      from: 'unai.ricco.moyano@gmail.com',
+      subject: `Nuevo mensaje de ${name} desde el portfolio`,
+      text: message,
       html: `
-        <h2>Nuevo mensaje de portafolio</h2>
-        <p><strong>Nombre:</strong> ${data.name}</p>
-        <p><strong>Email:</strong> ${data.email}</p>
-        <p><strong>Mensaje:</strong> ${data.message}</p>
-      `,
+        <h2>Nuevo mensaje desde el portfolio</h2>
+        <p><strong>Nombre:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Mensaje:</strong></p>
+        <p>${message}</p>
+      `
     };
 
     await sgMail.send(msg);
-    
+
     return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Error:', error);
-    return NextResponse.json(
-      { error: 'Error al procesar el formulario' },
-      { status: 500 }
-    );
+  } catch (error: any) {
+    console.error('Error sending email:', {
+      statusCode: error?.response?.statusCode,
+      body: error?.response?.body,
+      message: error?.message
+    });
+    
+    return NextResponse.json({ 
+      success: false,
+      error: error?.response?.body?.errors || error?.message 
+    }, { status: 500 });
   }
 }
