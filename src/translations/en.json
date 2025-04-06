@@ -1,0 +1,51 @@
+{
+  "hero": {
+    "title": "Full-Stack Developer",
+    "description": "Full-Stack Developer with more than 2 years of experience, focused on creating scalable and performance-optimized applications. My passion is software architecture and continuous improvement, always looking for new challenges to innovate and provide efficient solutions."
+  },
+  "contact": {
+    "button": "Send message",
+    "location": "Working from Barcelona, collaborating worldwide",
+    "success": "Message sent successfully!",
+    "error": "Error sending message. Please try again.",
+    "name": "Name",
+    "email": "Email",
+    "message": "Contact me and let's do something incredible",
+    "send": "Send message",
+    "title": "Let's work together!"
+  },
+  "technologies": {
+    "title": "Technologies",
+    "subtitle": "My technology stack"
+  },
+  "projects": {
+    "title": "Notable Achievements",
+    "subtitle": "Highlighted projects",
+    "title1": "Web Application Development",
+    "description1": "Development and maintenance of web applications with Laravel, Angular and Vue.js. Scaling application to SaaS with optimized architecture for multiple clients.",
+    "title2": "Optimization and Performance",
+    "description2": "Significant improvement in response times and resource consumption. Implementation of WebSockets for real-time applications and automation with CRON Jobs.",
+    "title3": "Integration and APIs",
+    "description3": "Development of REST APIs with focus on security and scalability. Integration of geolocation services and external systems.",
+    "title4": "DevOps and Automation",
+    "description4": "Deployment automation using Git, Docker and GitHub Actions. Implementation of agile methodologies and development best practices.",
+    "title5": "Data Management System",
+    "description5": "Design and implementation of a scalable architecture for efficient business data management, with real-time synchronization and high availability."
+  },
+  "skills": {
+    "title": "Skills",
+    "subtitle": "My main skills",
+    "problemSolving": "Problem solving",
+    "problemSolvingDescription": "Ability to identify and resolve technical problems efficiently.",
+    "adaptability": "Adaptability",
+    "adaptabilityDescription": "Flexibility to adapt to new technologies and work environments.",
+    "timeManagement": "Time management",
+    "timeManagementDescription": "Ability to prioritize tasks and meet deadlines.",
+    "attentionToDetail": "Attention to detail",
+    "attentionToDetailDescription": "Meticulous focus on quality and precision of work performed.",
+    "teamwork": "Teamwork",
+    "teamworkDescription": "Experience in agile environments and effective collaboration in multidisciplinary teams.",
+    "effectiveCommunication": "Effective communication",
+    "effectiveCommunicationDescription": "Ability to communicate technical ideas clearly and concisely."
+  }
+}

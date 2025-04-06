@@ -1,15 +1,14 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { getTranslation } from '../translations';
+import LanguageSwitcher from './components/LanguageSwitcher';
 
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-});
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "My portfolio website",
+  title: 'Unai Ricco - Desarrollador Full Stack',
+  description: 'Portafolio de Unai Ricco - Desarrollador Full Stack con experiencia en tecnologías modernas',
 };
 
 export default function RootLayout({
@@ -18,8 +17,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="es">
+      <body className={inter.className}>
+        {children}
+      </body>
     </html>
   );
 }
