@@ -402,6 +402,14 @@ export default function Home() {
               <h3>{getTranslation('skills.effectiveCommunication', locale)}</h3>
               <p>{getTranslation('skills.effectiveCommunicationDescription', locale)}</p>
             </div>
+            <div className={styles.skillCard}>
+              <h3>{getTranslation('skills.criticalThinking', locale)}</h3>
+              <p>{getTranslation('skills.criticalThinkingDescription', locale)}</p>
+            </div>
+            <div className={styles.skillCard}>
+              <h3>{getTranslation('skills.continuousLearning', locale)}</h3>
+              <p>{getTranslation('skills.continuousLearningDescription', locale)}</p>
+            </div>
           </div>
         </section>
       </main>

@@ -19,7 +19,7 @@
     "subtitle": "My technology stack"
   },
   "projects": {
-    "title": "Notable Achievements",
+    "title": "Areas of experience",
     "subtitle": "Highlighted projects",
     "title1": "Web Application Development",
     "description1": "Development and maintenance of web applications with Laravel, Angular and Vue.js. Scaling application to SaaS with optimized architecture for multiple clients.",
@@ -46,6 +46,10 @@
     "teamwork": "Teamwork",
     "teamworkDescription": "Experience in agile environments and effective collaboration in multidisciplinary teams.",
     "effectiveCommunication": "Effective communication",
-    "effectiveCommunicationDescription": "Ability to communicate technical ideas clearly and concisely."
+    "effectiveCommunicationDescription": "Ability to communicate technical ideas clearly and concisely.",
+    "criticalThinking": "Critical thinking",
+    "criticalThinkingDescription": "Ability to analyze complex situations and make well-informed decisions based on data and context.",
+    "continuousLearning": "Continuous learning",
+    "continuousLearningDescription": "Constant interest in acquiring new knowledge and staying up to date with the latest technologies."
   }
 }
