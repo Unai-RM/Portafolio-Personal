@@ -1,40 +1,55 @@
-"use client";
+'use client';
 
 import styles from './styles.module.css';
 import React from 'react';
 import 'leaflet/dist/leaflet.css';
+import { getTranslation } from '../translations';
+import LanguageSwitcher from './components/LanguageSwitcher';
 
 export default function Home() {
-  // Función para actualizar las anclas activas
+  const [locale, setLocale] = React.useState<'es' | 'en'>('es');
+
+  // Listen for locale change events
+  React.useEffect(() => {
+    const handleLocaleChange = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      setLocale(customEvent.detail);
+    };
+
+    window.addEventListener('localeChange', handleLocaleChange);
+    return () => window.removeEventListener('localeChange', handleLocaleChange);
+  }, []);
+
+  // Function to update active anchors
   const updateActiveAnchor = () => {
-    if (typeof window === 'undefined') return; // Verificar que estamos en el cliente
+    if (typeof window === 'undefined') return;
 
     const sections = ['header', 'technologies', 'projects', 'skills', 'contact'];
     const scrollPosition = window.scrollY;
     const windowHeight = window.innerHeight;
-    let activeSection = sections[0]; // Por defecto, la primera sección
+    let activeSection = sections[0];
 
-    // Actualizar el estado de scroll del header
+    // Update header scroll state
     const header = document.getElementById('header');
     if (header) {
       header.setAttribute('data-scrolled', (scrollPosition > 50).toString());
     }
 
-    // Encontrar la sección activa
+    // Find active section
     sections.forEach(section => {
       const element = document.getElementById(section);
       if (element) {
         const rect = element.getBoundingClientRect();
         const elementCenter = rect.top + rect.height / 2;
         
-        // Si el centro de la sección está en el viewport
+        // If the section center is in the viewport
         if (elementCenter > 0 && elementCenter < windowHeight) {
           activeSection = section;
         }
       }
     });
 
-    // Actualizar todas las anclas
+    // Update all anchors
     const anchors = document.querySelectorAll(`.${styles.anchor}`);
     anchors.forEach(anchor => {
       const href = anchor.getAttribute('href');
@@ -45,7 +60,7 @@ export default function Home() {
     });
   };
 
-  // Efecto para inicializar el mapa
+  // Effect to initialize the map
   React.useEffect(() => {
     let map: any = null;
     let isMapInitialized = false;
@@ -59,28 +74,28 @@ export default function Home() {
         
         if (!mapContainer) return;
 
-        // Coordenadas de la Sagrada Familia
+        // Coordinates of the Sagrada Familia
         const lat = 41.39682507564281;
         const lng = 2.1665245082363622;
 
-        // Inicializar el mapa
+        // Initialize the map
         map = L.map('map').setView([lat, lng], 15);
         isMapInitialized = true;
 
-        // Añadir capa del mapa
+        // Add map layer
         L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-          attribution: '© OpenStreetMap contributors',
+          attribution: 'OpenStreetMap contributors',
           maxZoom: 19
         }).addTo(map);
 
-        // Crear icono personalizado
+        // Create custom icon
         const customIcon = L.icon({
           iconUrl: '/location-pin.svg',
           iconSize: [40, 40],
           iconAnchor: [20, 40]
         });
 
-        // Añadir marcador
+        // Add marker
         L.marker([lat, lng], { icon: customIcon }).addTo(map);
       } catch (error) {
         console.error('Error initializing map:', error);
@@ -98,11 +113,11 @@ export default function Home() {
     };
   }, []);
 
-  // Efecto para manejar el scroll y clicks
+  // Effect to handle scroll and clicks
   React.useEffect(() => {
-    if (typeof window === 'undefined') return; // Verificar que estamos en el cliente
+    if (typeof window === 'undefined') return;
 
-    // Manejar scroll con throttle para mejor rendimiento
+    // Handle scroll with throttle for better performance
     let ticking = false;
     const handleScroll = () => {
       if (!ticking) {
@@ -116,7 +131,7 @@ export default function Home() {
 
     window.addEventListener('scroll', handleScroll);
 
-    // Manejar clicks en las anclas
+    // Handle clicks on anchors
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (target && target.closest(`.${styles.anchor}`)) {
@@ -132,7 +147,7 @@ export default function Home() {
 
     document.addEventListener('click', handleAnchorClick);
 
-    // Actualizar ancla inicial después de que el contenido se haya cargado
+    // Update initial anchor after content has loaded
     window.requestAnimationFrame(updateActiveAnchor);
 
     return () => {
@@ -204,7 +219,7 @@ export default function Home() {
       icon: '/icons/codeigniter.svg',
       color: '#EE4323'
     },
-    // Herramientas y Extras
+    // Tools and Extras
     {
       name: 'SQL',
       icon: '/icons/database.svg',
@@ -229,28 +244,28 @@ export default function Home() {
 
   const projects = [
     {
-      title: 'Desarrollo de Aplicaciones Web',
-      description: 'Desarrollo y mantenimiento de aplicaciones web con Laravel, Angular y Vue.js. Escalado de aplicación a SaaS con arquitectura optimizada para múltiples clientes.',
+      title: getTranslation('projects.title1', locale),
+      description: getTranslation('projects.description1', locale),
       technologies: ['Laravel', 'Angular', 'Vue.js', 'SaaS']
     },
     {
-      title: 'Optimización y Rendimiento',
-      description: 'Mejora significativa en tiempos de respuesta y consumo de recursos. Implementación de WebSockets para aplicaciones en tiempo real y automatización con CRON Jobs.',
+      title: getTranslation('projects.title2', locale),
+      description: getTranslation('projects.description2', locale),
       technologies: ['WebSockets', 'Backend', 'Frontend', 'CRON']
     },
     {
-      title: 'Integración y APIs',
-      description: 'Desarrollo de APIs REST con enfoque en seguridad y escalabilidad. Integración de servicios de geolocalización y sistemas externos.',
-      technologies: ['REST APIs', 'Geolocalización', 'Integración']
+      title: getTranslation('projects.title3', locale),
+      description: getTranslation('projects.description3', locale),
+      technologies: ['REST APIs', 'Geolocation', 'Integration']
     },
     {
-      title: 'DevOps y Automatización',
-      description: 'Automatización de despliegues utilizando Git, Docker y GitHub Actions. Implementación de metodologías ágiles y mejores prácticas de desarrollo.',
+      title: getTranslation('projects.title4', locale),
+      description: getTranslation('projects.description4', locale),
       technologies: ['Docker', 'Git', 'GitHub Actions', 'CI/CD']
     },
     {
-      title: 'Sistema de Gestión de Datos',
-      description: 'Diseño e implementación de una arquitectura escalable para la gestión eficiente de datos empresariales, con sincronización en tiempo real y alta disponibilidad.',
+      title: getTranslation('projects.title5', locale),
+      description: getTranslation('projects.description5', locale),
       technologies: ['CodeIgniter', 'SQL', 'REST APIs']
     }
   ];
@@ -275,34 +290,38 @@ export default function Home() {
   
       if (response.ok) {
         e.currentTarget.reset();
-        alert('Mensaje enviado con éxito!');
+        alert(getTranslation('contact.success', locale));
       } else {
-        throw new Error('Error al enviar el mensaje');
+        throw new Error('Error sending message');
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Error al enviar el mensaje. Por favor, intenta de nuevo.');
+      alert(getTranslation('contact.error', locale));
     }
   };
 
   return (
     <div className={styles.container}>
+      {/* Navigation */}
       <nav className={styles.sectionAnchors}>
-        <a href="#header" className={styles.anchor} title="Inicio"></a>
-        <a href="#technologies" className={styles.anchor} title="Tecnologías"></a>
-        <a href="#projects" className={styles.anchor} title="Logros"></a>
-        <a href="#skills" className={styles.anchor} title="Aptitudes"></a>
-        <a href="#contact" className={styles.anchor} title="Contacto"></a>
+        <a href="#header" className={styles.anchor} title={getTranslation('hero.title', locale)}></a>
+        <a href="#technologies" className={styles.anchor} title={getTranslation('technologies.title', locale)}></a>
+        <a href="#projects" className={styles.anchor} title={getTranslation('projects.title', locale)}></a>
+        <a href="#skills" className={styles.anchor} title={getTranslation('skills.title', locale)}></a>
+        <a href="#contact" className={styles.anchor} title={getTranslation('contact.title', locale)}></a>
       </nav>
+      
+      <div className={styles.languageSwitcherContainer}>
+        <LanguageSwitcher />
+      </div>
+
       {/* Hero Section */}
       <header className={styles.header} id="header">
         <div className={styles.headerContent}>
           <h1 className={styles.name}>Unai Ricco</h1>
-          <h2 className={styles.role}>Desarrollador Full-Stack</h2>
+          <h2 className={styles.role}>{getTranslation('hero.role', locale)}</h2>
           <p className={styles.description}>
-            Desarrollador Full-Stack con más de 2 años de experiencia, enfocado en crear aplicaciones escalables y
-            optimizadas en rendimiento. Mi pasión es la arquitectura de software y la mejora continua, siempre buscando
-            nuevos retos para innovar y aportar soluciones eficientes.
+            {getTranslation('hero.description', locale)}
           </p>
           <div className={styles.socialLinks}>
             <a href="https://github.com/Unai-Ricco" className={styles.socialLink} target="_blank" rel="noopener noreferrer">GitHub</a>
@@ -312,10 +331,11 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Main Content */}
       <main className={styles.main}>
         {/* Technologies Section */}
         <section className={styles.section} id="technologies">
-          <h2 className={styles.sectionTitle}>Tecnologías</h2>
+          <h2 className={styles.sectionTitle}>{getTranslation('technologies.title', locale)}</h2>
           <div className={styles.techGrid}>
             {technologies.map((tech, index) => (
               <div 
@@ -336,7 +356,7 @@ export default function Home() {
 
         {/* Projects Section */}
         <section className={styles.section} id="projects">
-          <h2 className={styles.sectionTitle}>Logros Destacados</h2>
+          <h2 className={styles.sectionTitle}>{getTranslation('projects.title', locale)}</h2>
           <div className={styles.projectsGrid}>
             {projects.map((project, index) => (
               <article key={index} className={styles.projectCard}>
@@ -356,43 +376,44 @@ export default function Home() {
 
         {/* Skills Section */}
         <section className={styles.section} id="skills">
-          <h2 className={styles.sectionTitle}>Aptitudes</h2>
+          <h2 className={styles.sectionTitle}>{getTranslation('skills.title', locale)}</h2>
           <div className={styles.skillsGrid}>
             <div className={styles.skillCard}>
-              <h3>Resolución de problemas</h3>
-              <p>Capacidad para identificar y resolver problemas técnicos de manera eficiente.</p>
+              <h3>{getTranslation('skills.problemSolving', locale)}</h3>
+              <p>{getTranslation('skills.problemSolvingDescription', locale)}</p>
             </div>
             <div className={styles.skillCard}>
-              <h3>Capacidad de adaptación</h3>
-              <p>Flexibilidad para adaptarme a nuevas tecnologías y entornos de trabajo.</p>
+              <h3>{getTranslation('skills.adaptability', locale)}</h3>
+              <p>{getTranslation('skills.adaptabilityDescription', locale)}</p>
             </div>
             <div className={styles.skillCard}>
-              <h3>Gestión de tiempo</h3>
-              <p>Habilidad para priorizar tareas y cumplir con los plazos establecidos.</p>
+              <h3>{getTranslation('skills.timeManagement', locale)}</h3>
+              <p>{getTranslation('skills.timeManagementDescription', locale)}</p>
             </div>
             <div className={styles.skillCard}>
-              <h3>Atención al detalle</h3>
-              <p>Enfoque meticuloso en la calidad y precisión del trabajo realizado.</p>
+              <h3>{getTranslation('skills.attentionToDetail', locale)}</h3>
+              <p>{getTranslation('skills.attentionToDetailDescription', locale)}</p>
             </div>
             <div className={styles.skillCard}>
-              <h3>Trabajo en equipo</h3>
-              <p>Experiencia en entornos ágiles y colaboración efectiva en equipos multidisciplinarios.</p>
+              <h3>{getTranslation('skills.teamwork', locale)}</h3>
+              <p>{getTranslation('skills.teamworkDescription', locale)}</p>
             </div>
             <div className={styles.skillCard}>
-              <h3>Comunicación efectiva</h3>
-              <p>Habilidad para comunicar ideas técnicas de manera clara y concisa.</p>
+              <h3>{getTranslation('skills.effectiveCommunication', locale)}</h3>
+              <p>{getTranslation('skills.effectiveCommunicationDescription', locale)}</p>
             </div>
           </div>
         </section>
       </main>
+
       {/* Contact Section */}
       <section className={styles.footer} id="contact">
         <div className={styles.footerContent}>
-          <h2 className={styles.sectionTitle}>¡Trabajemos juntos!</h2>
+          <h2 className={styles.footerTitle}>{getTranslation('contact.title', locale)}</h2>
           <div className={styles.contactGrid}>
             <div className={styles.contactColumn}>
               <div className={styles.contactDetails}>
-                <p>Contáctame y hagamos algo increíble</p>
+                <p>{getTranslation('contact.message', locale)}</p>
                 <div className={styles.contactLinks}>
                   <div>
                     <a href="https://linkedin.com/in/unairicco" className={styles.contactLink} target="_blank" rel="noopener noreferrer" title="/in/unairicco">
@@ -411,35 +432,36 @@ export default function Home() {
                   <input 
                     type="text" 
                     name="name" 
-                    placeholder="Nombre" 
+                    placeholder={getTranslation('contact.name', locale)} 
                     className={styles.formInput} 
                     required 
                   />
                   <input 
                     type="email" 
                     name="email" 
-                    placeholder="Email" 
+                    placeholder={getTranslation('contact.email', locale)} 
                     className={styles.formInput} 
                     required 
                   />
                   <textarea 
                     name="message" 
-                    placeholder="Mensaje" 
+                    placeholder={getTranslation('contact.message', locale)} 
                     className={styles.formInput} 
                     required
                   />
-                  <button type="submit" className={styles.submitButton}>Enviar mensaje</button>
+                  <button type="submit" className={styles.submitButton}>{getTranslation('contact.send', locale)}</button>
                 </form>
               </div>
             </div>
             <div className={styles.mapDetails}>
+              <p className={styles.locationText}>{getTranslation('contact.location', locale)}</p>
               <div className={styles.mapColumn}>
                 <div className={styles.mapContainer} id="map" />
-                <p className={styles.locationText}>Ubicado en Barcelona, España</p>
               </div>
             </div>
           </div>
         </div>
+        <p className={styles.copyright}>© Unai Ricco {new Date().getFullYear()}</p>
       </section>
     </div>
   );

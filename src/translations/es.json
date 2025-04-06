@@ -1,0 +1,51 @@
+{
+  "hero": {
+    "title": "Desarrollador Full-Stack",
+    "description": "Desarrollador Full-Stack con más de 2 años de experiencia, enfocado en crear aplicaciones escalables y optimizadas en rendimiento. Mi pasión es la arquitectura de software y la mejora continua, siempre buscando nuevos retos para innovar y aportar soluciones eficientes."
+  },
+  "contact": {
+    "button": "Enviar mensaje",
+    "location": "Trabajo desde Barcelona, colaboro hasta donde estés",
+    "success": "Mensaje enviado con éxito!",
+    "error": "Error al enviar el mensaje. Por favor, intenta de nuevo.",
+    "name": "Nombre",
+    "email": "Email",
+    "message": "Contáctame y hagamos algo increíble",
+    "send": "Enviar mensaje",
+    "title": "¡Trabajemos juntos!"
+  },
+  "technologies": {
+    "title": "Tecnologías",
+    "subtitle": "Mi stack tecnológico"
+  },
+  "projects": {
+    "title": "Logros Destacados",
+    "subtitle": "Proyectos destacados",
+    "title1": "Desarrollo de Aplicaciones Web",
+    "description1": "Desarrollo y mantenimiento de aplicaciones web con Laravel, Angular y Vue.js. Escalado de aplicación a SaaS con arquitectura optimizada para múltiples clientes.",
+    "title2": "Optimización y Rendimiento",
+    "description2": "Mejora significativa en tiempos de respuesta y consumo de recursos. Implementación de WebSockets para aplicaciones en tiempo real y automatización con CRON Jobs.",
+    "title3": "Integración y APIs",
+    "description3": "Desarrollo de APIs REST con enfoque en seguridad y escalabilidad. Integración de servicios de geolocalización y sistemas externos.",
+    "title4": "DevOps y Automatización",
+    "description4": "Automatización de despliegues utilizando Git, Docker y GitHub Actions. Implementación de metodologías ágiles y mejores prácticas de desarrollo.",
+    "title5": "Sistema de Gestión de Datos",
+    "description5": "Diseño e implementación de una arquitectura escalable para la gestión eficiente de datos empresariales, con sincronización en tiempo real y alta disponibilidad."
+  },
+  "skills": {
+    "title": "Aptitudes",
+    "subtitle": "Mis habilidades principales",
+    "problemSolving": "Resolución de problemas",
+    "problemSolvingDescription": "Capacidad para identificar y resolver problemas técnicos de manera eficiente.",
+    "adaptability": "Capacidad de adaptación",
+    "adaptabilityDescription": "Flexibilidad para adaptarme a nuevas tecnologías y entornos de trabajo.",
+    "timeManagement": "Gestión de tiempo",
+    "timeManagementDescription": "Habilidad para priorizar tareas y cumplir con los plazos establecidos.",
+    "attentionToDetail": "Atención al detalle",
+    "attentionToDetailDescription": "Enfoque meticuloso en la calidad y precisión del trabajo realizado.",
+    "teamwork": "Trabajo en equipo",
+    "teamworkDescription": "Experiencia en entornos ágiles y colaboración efectiva en equipos multidisciplinarios.",
+    "effectiveCommunication": "Comunicación efectiva",
+    "effectiveCommunicationDescription": "Habilidad para comunicar ideas técnicas de manera clara y concisa."
+  }
+}

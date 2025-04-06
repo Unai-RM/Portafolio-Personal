@@ -10,6 +10,14 @@ const nextConfig = {
       },
     ],
   },
+  i18n: {
+    locales: ['es', 'en'],
+    defaultLocale: 'es',
+  },
+  webpack: (config) => {
+    config.resolve.alias['@'] = __dirname;
+    return config;
+  }
 }
 
 module.exports = nextConfig
