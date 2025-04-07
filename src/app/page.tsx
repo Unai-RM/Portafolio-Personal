@@ -121,19 +121,19 @@ export default function Home() {
     initMap();
   }, [isMobileDevice]);
 
+  const [expandedSkill, setExpandedSkill] = React.useState<string | null>(null);
+
+  const toggleSkill = (skill: string) => {
+    if (isMobileDevice) {
+      setExpandedSkill(prev => prev === null ? skill : null);
+    }
+  };
+
   const [expandedProject, setExpandedProject] = React.useState<string | null>(null);
 
   const toggleProject = (project: string) => {
     if (isMobileDevice) {
-      setExpandedProject(prev => prev === project ? null : project);
-    }
-  };
-
-  const [expandedSkill, setExpandedSkill] = React.useState<string | null>(null);
-
-  const toggleSkill = (skill: string) => {
-    if (!isMobileDevice) {
-      setExpandedSkill(expandedSkill === skill ? null : skill);
+      setExpandedProject(prev => prev === null ? project : null);
     }
   };
 
@@ -222,6 +222,12 @@ export default function Home() {
       color: '#181717'
     },
   ];
+
+  const frontendTechnologies = technologies.filter(tech => ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Vue', 'Next.js', 'Angular'].includes(tech.name));
+  const backendTechnologies = technologies.filter(tech => ['PHP', 'Node.js', 'Laravel', 'CodeIgniter', 'SQL', 'REST APIs', 'Docker', 'GitHub'].includes(tech.name));
+  const toolsAndExtras = technologies.filter(tech => ['SQL', 'REST APIs', 'Docker', 'GitHub'].includes(tech.name));
+
+  const [showMore, setShowMore] = React.useState(false);
 
   const projects = [
     {
@@ -422,27 +428,83 @@ export default function Home() {
         {/* Technologies Section */}
         <section className={styles.section} id="technologies">
           <h2 className={styles.sectionTitle}>{getTranslation('technologies.title', locale)}</h2>
-          <div className={styles.techGrid}>
-            {technologies.map((tech, index) => (
-              <div 
-                key={index} 
-                className={styles.techItem}
-                style={{ borderColor: tech.color }}
-              >
-                <img 
-                  src={tech.icon} 
-                  alt={tech.name} 
-                  className={styles.techIcon} 
-                />
-                <span>{tech.name}</span>
+          {isMobileDevice ? (
+            <>
+              <div className={styles.technologiesContainer}>
+                <h2 className={styles.sectionTitle}>{getTranslation('technologies.frontend.title', locale)}</h2>
+                <div className={styles.technologiesCarousel}>
+                  {frontendTechnologies.map((tech, index) => (
+                    <div key={index} className={styles.technologyItem}>
+                      <img 
+                        src={tech.icon} 
+                        alt={tech.name} 
+                        className={styles.technologyIcon} 
+                      />
+                      <span className={styles.technologyName}>{tech.name}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
-          </div>
+
+              <div className={styles.technologiesContainer}>
+                <h2 className={styles.sectionTitle}>{getTranslation('technologies.backend.title', locale)}</h2>
+                <div className={styles.technologiesCarousel}>
+                  {backendTechnologies.map((tech, index) => (
+                    <div key={index} className={styles.technologyItem}>
+                      <img 
+                        src={tech.icon} 
+                        alt={tech.name} 
+                        className={styles.technologyIcon} 
+                      />
+                      <span className={styles.technologyName}>{tech.name}</span>
+                    </div>
+                  ))}
+                </div>
+                <button className={styles.seeMoreButton} onClick={() => setShowMore(!showMore)}>
+                  {showMore ? getTranslation('common.hide', locale) : getTranslation('common.seeMore', locale)}
+                </button>
+                {showMore && (
+                  <div className={styles.technologiesContainer}>
+                    <h2 className={styles.sectionTitle}>{getTranslation('technologies.toolsAndExtras.title', locale)}</h2>
+                    <div className={styles.technologiesCarousel}>
+                      {toolsAndExtras.map((tech, index) => (
+                        <div key={index} className={styles.technologyItem}>
+                          <img 
+                            src={tech.icon} 
+                            alt={tech.name} 
+                            className={styles.technologyIcon} 
+                          />
+                          <span className={styles.technologyName}>{tech.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </>
+          ) : (
+            <div className={styles.techGrid}>
+              {technologies.map((tech, index) => (
+                <div 
+                  key={index} 
+                  className={styles.techItem}
+                  style={{ borderColor: tech.color }}
+                >
+                  <img 
+                    src={tech.icon} 
+                    alt={tech.name} 
+                    className={styles.techIcon} 
+                  />
+                  <span>{tech.name}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
 
-        {/* Projects Section */}
+        {/* Experience area */}
         {isMobileDevice ? (
-          <section className={styles.section} id="projects">
+        <section className={styles.section} id="projects">
           <h2 className={styles.sectionTitle}>{getTranslation('projects.title', locale)}</h2>
           <div className={styles.skillsGrid}>
             {projects.map((project, index) => (
@@ -460,7 +522,7 @@ export default function Home() {
                   </div>
                 </div>
                 {isMobileDevice ? (
-                  expandedProject === project.title && (
+                  expandedProject !== null && (
                     <div className={styles.skillContent}>
                       <p>{project.description}</p>
                     </div>
@@ -475,8 +537,7 @@ export default function Home() {
           </div>
         </section>
         ):(
-          
-          <section className={styles.section} id="projects">
+        <section className={styles.section} id="projects">
           <h2 className={styles.sectionTitle}>{getTranslation('projects.title', locale)}</h2>
           <div className={styles.projectsGrid}>
             {projects.map((project, index) => (
@@ -497,7 +558,7 @@ export default function Home() {
                   ) : null}
                 </div>
                 {isMobileDevice && (
-                  expandedProject === project.title && (
+                  expandedProject !== null && (
                     <p className={styles.projectDescription}>{project.description}</p>
                   )
                 )}
@@ -526,7 +587,7 @@ export default function Home() {
                   </div>
                 </div>
                 {isMobileDevice ? (
-                  expandedSkill === skill.title && (
+                  expandedSkill !== null && (
                     <div className={styles.skillContent}>
                       <p>{skill.description}</p>
                     </div>
@@ -603,7 +664,7 @@ export default function Home() {
             )}
           </div>
         </div>
-        <p className={styles.copyright}> © Unai Ricco {new Date().getFullYear()}</p>
+        <p className={styles.copyright}> &copy; Unai Ricco {new Date().getFullYear()}</p>
       </section>
     </div>
   );

@@ -794,114 +794,6 @@
   height: 20px;
 }
 
-@media (max-width: 768px) {
-  .skillsGrid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-
-  .skillCard {
-    border-radius: 12px;
-    padding: 0;
-    overflow: hidden;
-  }
-
-  .skillHeader {
-    padding: 1.5rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  .skillHeader h3 {
-    font-size: 1.1rem;
-  }
-
-  .skillContent {
-    padding: 1.5rem;
-    background: #f8f9fa;
-  }
-
-  .skillCard:hover {
-    transform: none;
-  }
-}
-
-@media (max-width: 768px) {
-  .projectsGrid {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(5, auto);
-    grid-template-areas: 
-      "project1"
-      "project2"
-      "project3"
-      "project4"
-      "project5";
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-
-  .projectCard {
-    border-radius: 12px;
-    padding: 0;
-    cursor: pointer;
-    overflow: hidden;
-  }
-
-  .projectContent {
-    padding: 1.5rem;
-  }
-
-  .projectTitle {
-    font-size: 1.1rem;
-  }
-
-  .projectTechnologies {
-    margin-bottom: 1rem;
-  }
-
-  .projectDescription {
-    padding: 1.5rem;
-    background: #f8f9fa;
-  }
-
-  .projectCard:hover {
-    transform: none;
-  }
-
-  .section {
-    min-height: 90vh;
-    padding: 0rem 2rem;
-  }
-
-  .sectionTitle{
-    margin-bottom: 0;
-  }
-
-  .sectionAnchors{
-    display: none;
-  }
-
-  .projectCard:nth-child(1) {
-    grid-area: project1;
-  }
-
-  .projectCard:nth-child(2) {
-    grid-area: project2;
-  }
-
-  .projectCard:nth-child(3) {
-    grid-area: project3;
-  }
-
-  .projectCard:nth-child(4) {
-    grid-area: project4;
-  }
-
-  .projectCard:nth-child(5) {
-    grid-area: project5;
-  }
-}
-
 .copyright {
   color: white;
   font-weight: bold;
@@ -999,6 +891,256 @@
   right: 70px;
   z-index: 10;
 }
+
+.techCarousel {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.techCarouselHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+
+.techCarouselTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #0070f3;
+}
+
+.techCarouselContainer {
+  display: flex;
+  gap: 1rem;
+  padding: 0 1rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+
+.techCarouselSlide {
+  min-width: 100px;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  scroll-snap-align: start;
+  transition: transform 0.3s ease;
+}
+
+.techCarouselSlide:hover {
+  transform: scale(1.05);
+}
+
+.techCarouselSlide span {
+  display: block;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: white;
+}
+
+.techCarouselSlide img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+
+.projectCarousel {
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+}
+
+.projectCarouselContainer {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.projectCarouselItem {
+  min-width: 100%;
+  padding: 16px;
+}
+
+.projectCarouselNav {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.projectCarouselButton {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.projectCarouselButton:hover {
+  background: white;
+}
+
+.projectCarouselButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.technologiesContainer {
+  margin-bottom: 2rem;
+}
+
+.technologiesCarousel {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 1rem;
+  margin: 1rem 0;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+
+.technologyItem {
+  flex: 0 0 auto;
+  min-width: 100px;
+  text-align: center;
+  scroll-snap-align: start;
+}
+
+.technologyIcon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 0.5rem;
+}
+
+.technologyName {
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.seeMoreButton {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.seeMoreButton:hover {
+  background-color: var(--primary-dark);
+}
+
+.technologiesCarousel {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 1rem;
+  margin: 1rem 0;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+
+.technologyItem {
+  flex: 0 0 auto;
+  min-width: 100px;
+  text-align: center;
+  scroll-snap-align: start;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  transition: transform 0.3s ease;
+}
+
+.technologyItem:hover {
+  transform: scale(1.05);
+}
+
+.technologyIcon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 0.5rem;
+  object-fit: contain;
+}
+
+.technologyName {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.seeMoreButton {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.seeMoreButton:hover {
+  background-color: var(--primary-dark);
+}
+
+
+/* Estilos específicos para móvil */
+@media (max-width: 768px) {
+  .techCarousel {
+    margin-bottom: 1.5rem;
+  }
+
+  .techCarouselHeader {
+    padding: 0 0.5rem;
+  }
+
+  .techCarouselTitle {
+    font-size: 1rem;
+  }
+
+  .techCarouselSlide {
+    min-width: 80px;
+    padding: 0.75rem;
+  }
+
+  .techCarouselSlide span {
+    font-size: 0.7rem;
+  }
+
+  .techCarouselSlide img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
 
 @media (max-width: 768px) {
   .languageSwitcher {
@@ -1140,119 +1282,129 @@
   }
 }
 
-.techCarousel {
-  width: 100%;
-  overflow: hidden;
-  margin-bottom: 1rem;
+@media (max-width: 768px) {
+  .skillsGrid {
+    display: flex;
+    overflow: auto;
+    margin-top: 1rem;
+  }
+
+  .skillCard {
+    min-width: 300px;
+    margin:10px;
+    padding: 0;
+    background: #f8f9fa;
+  }
+
+  .skillHeader {
+    padding: 1.5rem;
+    background: #ffffff;
+    min-height: 170px;
+    border-radius: 10px;
+  }
+
+  .skillHeader h3 {
+    font-size: 1.1rem;
+  }
+
+  .skillContent {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+  }
+
+  .skillCard:hover {
+    transform: none;
+  }
 }
 
-.techCarouselHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-  padding: 0 0.5rem;
-}
+@media (max-width: 768px) {
+  .projectsGrid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, auto);
+    grid-template-areas: 
+      "project1"
+      "project2"
+      "project3"
+      "project4"
+      "project5";
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
 
-.techCarouselTitle {
-  font-weight: 600;
-  color: #0070f3;
-}
+  .projectCard {
+    border-radius: 12px;
+    padding: 0;
+    cursor: pointer;
+    overflow: hidden;
+  }
 
-.techCarouselNav {
-  display: flex;
-  gap: 1rem;
-}
+  .projectContent {
+    padding: 1.5rem;
+  }
 
-.techCarouselButton {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+  .projectTitle {
+    font-size: 1.1rem;
+  }
 
-.techCarouselButton:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
+  .projectTechnologies {
+    margin-bottom: 1rem;
+  }
 
-.techCarouselButton svg {
-  width: 16px;
-  height: 16px;
-  fill: white;
-}
+  .projectDescription {
+    padding: 1.5rem;
+    background: #f8f9fa;
+  }
 
-.techCarouselContainer {
-  display: flex;
-  gap: 1rem;
-  padding: 0.5rem;
-}
+  .projectCard:hover {
+    transform: none;
+  }
 
-.techCarouselSlide {
-  min-width: 100px;
-  flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  padding: 0.5rem;
-  text-align: center;
-}
+  .section {
+    min-height: 30vh;
+    padding: 0rem 2rem;
+  }
 
-.techCarouselSlide span {
-  display: block;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+  .sectionTitle{
+    margin-bottom: 0;
+  }
 
-.projectCarousel {
-  position: relative;
-  overflow: hidden;
-  padding: 20px;
-}
+  .sectionAnchors{
+    display: none;
+  }
 
-.projectCarouselContainer {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
+  .projectCard:nth-child(1) {
+    grid-area: project1;
+  }
 
-.projectCarouselItem {
-  min-width: 100%;
-  padding: 16px;
-}
+  .projectCard:nth-child(2) {
+    grid-area: project2;
+  }
 
-.projectCarouselNav {
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  transform: translateY(-50%);
-  z-index: 10;
-}
+  .projectCard:nth-child(3) {
+    grid-area: project3;
+  }
 
-.projectCarouselButton {
-  background: rgba(255, 255, 255, 0.9);
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+  .projectCard:nth-child(4) {
+    grid-area: project4;
+  }
 
-.projectCarouselButton:hover {
-  background: white;
-}
+  .projectCard:nth-child(5) {
+    grid-area: project5;
+  }
 
-.projectCarouselButton:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  .contactLinks{
+    padding: 2rem 0;
+  }
+
+  .contactLink{
+    padding: 0;
+    width: 140px;
+    height: 65px;
+  }
+
+  .footerTitle{
+    margin-top: 100px;
+  }
 }
