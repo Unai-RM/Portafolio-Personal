@@ -1,12 +1,15 @@
 // src/app/components/LanguageSwitcher.tsx
 'use client';
 
-import { useState } from 'react';
+import { ReactElement } from 'react';
 import styles from '../styles.module.css';
 
-export default function LanguageSwitcher() {
-  const [locale, setLocale] = useState('es');
+interface LanguageSwitcherProps {
+  locale: 'es' | 'en';
+  setLocale: React.Dispatch<React.SetStateAction<'es' | 'en'>>;
+}
 
+export default function LanguageSwitcher({ locale, setLocale }: LanguageSwitcherProps): ReactElement {
   const handleLocaleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newLocale = event.target.value as 'es' | 'en';
     if (locale !== newLocale) {

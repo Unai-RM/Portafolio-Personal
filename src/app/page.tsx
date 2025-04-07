@@ -61,14 +61,22 @@ export default function Home() {
     });
   };
 
-  // Effect to initialize the map
+  const [isMobileDevice, setIsMobileDevice] = React.useState(false);
+  const [isMapInitialized, setIsMapInitialized] = React.useState(false);
+
+  // Initialize mobile state and map on client side
   React.useEffect(() => {
-    let map: any = null;
-    let isMapInitialized = false;
+    setIsMobileDevice(window.innerWidth <= 768);
+    const handleResize = () => setIsMobileDevice(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Map initialization
+  React.useEffect(() => {
+    if (isMobileDevice || isMapInitialized) return;
 
     const initMap = async () => {
-      if (typeof window === 'undefined' || isMapInitialized) return;
-
       try {
         const L = await import('leaflet');
         const mapContainer = document.getElementById('map');
@@ -80,8 +88,8 @@ export default function Home() {
         const lng = 2.1665245082363622;
 
         // Initialize the map
-        map = L.map('map').setView([lat, lng], 15);
-        isMapInitialized = true;
+        const map = L.map('map').setView([lat, lng], 15);
+        setIsMapInitialized(true);
 
         // Add map layer
         L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
@@ -98,64 +106,36 @@ export default function Home() {
 
         // Add marker
         L.marker([lat, lng], { icon: customIcon }).addTo(map);
+
+        // Cleanup
+        return () => {
+          if (map) {
+            map.remove();
+          }
+        };
       } catch (error) {
         console.error('Error initializing map:', error);
       }
     };
 
     initMap();
+  }, [isMobileDevice]);
 
-    // Cleanup
-    return () => {
-      if (map && isMapInitialized) {
-        map.remove();
-        isMapInitialized = false;
-      }
-    };
-  }, []);
+  const [expandedProject, setExpandedProject] = React.useState<string | null>(null);
 
-  // Effect to handle scroll and clicks
-  React.useEffect(() => {
-    if (typeof window === 'undefined') return;
+  const toggleProject = (project: string) => {
+    if (isMobileDevice) {
+      setExpandedProject(prev => prev === project ? null : project);
+    }
+  };
 
-    // Handle scroll with throttle for better performance
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updateActiveAnchor();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
+  const [expandedSkill, setExpandedSkill] = React.useState<string | null>(null);
 
-    window.addEventListener('scroll', handleScroll);
-
-    // Handle clicks on anchors
-    const handleAnchorClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (target && target.closest(`.${styles.anchor}`)) {
-        e.preventDefault();
-        const anchor = target.closest(`.${styles.anchor}`) as HTMLElement;
-        const href = anchor.getAttribute('href');
-        if (href) {
-          const section = document.querySelector(href);
-          section?.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    };
-
-    document.addEventListener('click', handleAnchorClick);
-
-    // Update initial anchor after content has loaded
-    window.requestAnimationFrame(updateActiveAnchor);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      document.removeEventListener('click', handleAnchorClick);
-    };
-  }, []);
+  const toggleSkill = (skill: string) => {
+    if (!isMobileDevice) {
+      setExpandedSkill(expandedSkill === skill ? null : skill);
+    }
+  };
 
   const technologies = [
     // Frontend
@@ -271,26 +251,6 @@ export default function Home() {
     }
   ];
 
-  const [expandedProject, setExpandedProject] = React.useState<string | null>(null);
-
-  const toggleProject = (project: string) => {
-    if (isMobile()) {
-      setExpandedProject(prev => prev === project ? null : project);
-    }
-  };
-
-  const [expandedSkill, setExpandedSkill] = React.useState<string | null>(null);
-
-  const isMobile = () => {
-    return typeof window !== 'undefined' && window.innerWidth <= 768;
-  };
-
-  const toggleSkill = (skill: string) => {
-    if (isMobile()) {
-      setExpandedSkill(prev => prev === skill ? null : skill);
-    }
-  };
-
   const skills = [
     {
       title: getTranslation('skills.problemSolving', locale),
@@ -372,6 +332,49 @@ export default function Home() {
     }
   };
 
+  // Effect to handle scroll and clicks
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    // Handle scroll with throttle for better performance
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateActiveAnchor();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Handle clicks on anchors
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && target.closest(`.${styles.anchor}`)) {
+        e.preventDefault();
+        const anchor = target.closest(`.${styles.anchor}`) as HTMLElement;
+        const href = anchor.getAttribute('href');
+        if (href) {
+          const section = document.querySelector(href);
+          section?.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+
+    document.addEventListener('click', handleAnchorClick);
+
+    // Update initial anchor after content has loaded
+    window.requestAnimationFrame(updateActiveAnchor);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('click', handleAnchorClick);
+    };
+  }, []);
+
   return (
     <div className={styles.container}>
       <Toaster
@@ -395,7 +398,7 @@ export default function Home() {
       </nav>
       
       <div className={styles.languageSwitcherContainer}>
-        <LanguageSwitcher />
+        <LanguageSwitcher locale={locale} setLocale={setLocale} />
       </div>
 
       {/* Hero Section */}
@@ -438,7 +441,42 @@ export default function Home() {
         </section>
 
         {/* Projects Section */}
-        <section className={styles.section} id="projects">
+        {isMobileDevice ? (
+          <section className={styles.section} id="projects">
+          <h2 className={styles.sectionTitle}>{getTranslation('projects.title', locale)}</h2>
+          <div className={styles.skillsGrid}>
+            {projects.map((project, index) => (
+              <div 
+                key={index} 
+                className={styles.skillCard}
+                onClick={() => toggleProject(project.title || '')}
+              >
+                <div className={styles.skillHeader}>
+                  <h3>{project.title}</h3>
+                  <div className={styles.technologies}>
+                    {project.technologies.map((tech, techIndex) => (
+                      <span key={techIndex} className={styles.techTag}>{tech}</span>
+                    ))}
+                  </div>
+                </div>
+                {isMobileDevice ? (
+                  expandedProject === project.title && (
+                    <div className={styles.skillContent}>
+                      <p>{project.description}</p>
+                    </div>
+                  )
+                ) : (
+                  <div className={styles.skillContent}>
+                    <p>{project.description}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+        ):(
+          
+          <section className={styles.section} id="projects">
           <h2 className={styles.sectionTitle}>{getTranslation('projects.title', locale)}</h2>
           <div className={styles.projectsGrid}>
             {projects.map((project, index) => (
@@ -454,18 +492,20 @@ export default function Home() {
                       <span key={techIndex} className={styles.projectTechTag}>{tech}</span>
                     ))}
                   </div>
-                  {isMobile() ? (
-                    expandedProject === project.title && (
-                      <p className={styles.projectDescription}>{project.description}</p>
-                    )
-                  ) : (
+                  {!isMobileDevice ? (
                     <p className={styles.projectDescription}>{project.description}</p>
-                  )}
+                  ) : null}
                 </div>
+                {isMobileDevice && (
+                  expandedProject === project.title && (
+                    <p className={styles.projectDescription}>{project.description}</p>
+                  )
+                )}
               </article>
             ))}
           </div>
         </section>
+        )}
 
         {/* Skills Section */}
         <section className={styles.section} id="skills">
@@ -485,7 +525,7 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-                {isMobile() ? (
+                {isMobileDevice ? (
                   expandedSkill === skill.title && (
                     <div className={styles.skillContent}>
                       <p>{skill.description}</p>
@@ -549,15 +589,21 @@ export default function Home() {
                 </form>
               </div>
             </div>
-            <div className={styles.mapDetails}>
-              <p className={styles.locationText}>{getTranslation('contact.location', locale)}</p>
-              <div className={styles.mapColumn}>
-                <div className={styles.mapContainer} id="map" />
+            {!isMobileDevice && (
+              <div className={styles.mapDetails}>
+                <p className={styles.locationText}>{getTranslation('contact.location', locale)}</p>
+                <div className={styles.mapColumn}>
+                  <div className={styles.mapContainer} id="map">
+                    {!isMapInitialized && (
+                      <div className="map-placeholder">Loading map...</div>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
-        <p className={styles.copyright}> Unai Ricco {new Date().getFullYear()}</p>
+        <p className={styles.copyright}> © Unai Ricco {new Date().getFullYear()}</p>
       </section>
     </div>
   );
