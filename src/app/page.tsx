@@ -246,28 +246,91 @@ export default function Home() {
   const projects = [
     {
       title: getTranslation('projects.title1', locale),
-      description: getTranslation('projects.description1', locale),
+      description: getTranslation('projects.title1Description', locale),
       technologies: ['Laravel', 'Angular', 'Vue.js', 'SaaS']
     },
     {
       title: getTranslation('projects.title2', locale),
-      description: getTranslation('projects.description2', locale),
+      description: getTranslation('projects.title2Description', locale),
       technologies: ['WebSockets', 'Backend', 'Frontend', 'CRON']
     },
     {
       title: getTranslation('projects.title3', locale),
-      description: getTranslation('projects.description3', locale),
+      description: getTranslation('projects.title3Description', locale),
       technologies: ['REST APIs', 'Geolocation', 'Integration']
     },
     {
       title: getTranslation('projects.title4', locale),
-      description: getTranslation('projects.description4', locale),
+      description: getTranslation('projects.title4Description', locale),
       technologies: ['Docker', 'Git', 'GitHub Actions', 'CI/CD']
     },
     {
       title: getTranslation('projects.title5', locale),
-      description: getTranslation('projects.description5', locale),
+      description: getTranslation('projects.title5Description', locale),
       technologies: ['CodeIgniter', 'SQL', 'REST APIs']
+    }
+  ];
+
+  const [expandedProject, setExpandedProject] = React.useState<string | null>(null);
+
+  const toggleProject = (project: string) => {
+    if (isMobile()) {
+      setExpandedProject(prev => prev === project ? null : project);
+    }
+  };
+
+  const [expandedSkill, setExpandedSkill] = React.useState<string | null>(null);
+
+  const isMobile = () => {
+    return typeof window !== 'undefined' && window.innerWidth <= 768;
+  };
+
+  const toggleSkill = (skill: string) => {
+    if (isMobile()) {
+      setExpandedSkill(prev => prev === skill ? null : skill);
+    }
+  };
+
+  const skills = [
+    {
+      title: getTranslation('skills.problemSolving', locale),
+      description: getTranslation('skills.problemSolvingDescription', locale),
+      technologies: ['Problem Solving', 'Critical Thinking', 'Decision Making']
+    },
+    {
+      title: getTranslation('skills.adaptability', locale),
+      description: getTranslation('skills.adaptabilityDescription', locale),
+      technologies: ['Adaptability', 'Learning', 'Flexibility']
+    },
+    {
+      title: getTranslation('skills.timeManagement', locale),
+      description: getTranslation('skills.timeManagementDescription', locale),
+      technologies: ['Time Management', 'Organization', 'Prioritization']
+    },
+    {
+      title: getTranslation('skills.attentionToDetail', locale),
+      description: getTranslation('skills.attentionToDetailDescription', locale),
+      technologies: ['Attention to Detail', 'Accuracy', 'Precision']
+    },
+    {
+      title: getTranslation('skills.teamwork', locale),
+      description: getTranslation('skills.teamworkDescription', locale),
+      technologies: ['Teamwork', 'Collaboration', 'Communication']
+    },
+    {
+      title: getTranslation('skills.effectiveCommunication', locale),
+      description: getTranslation('skills.effectiveCommunicationDescription', locale),
+      technologies: ['Communication', 'Presentation', 'Listening']
+    },
+    {
+      title: getTranslation('skills.criticalThinking', locale),
+      description: getTranslation('skills.criticalThinkingDescription', locale),
+      technologies: ['Critical Thinking', 'Analysis', 'Problem Solving']
+    },
+    {
+      title: getTranslation('skills.continuousLearning', locale),
+      description: getTranslation('skills.continuousLearningDescription', locale),
+      technologies: ['Learning', 'Development', 'Growth']
     }
   ];
 
@@ -379,15 +442,25 @@ export default function Home() {
           <h2 className={styles.sectionTitle}>{getTranslation('projects.title', locale)}</h2>
           <div className={styles.projectsGrid}>
             {projects.map((project, index) => (
-              <article key={index} className={styles.projectCard}>
+              <article 
+                key={index} 
+                className={styles.projectCard}
+                onClick={() => toggleProject(project.title || '')}
+              >
                 <div className={styles.projectContent}>
                   <h3 className={styles.projectTitle}>{project.title}</h3>
-                  <p className={styles.projectDescription}>{project.description}</p>
-                  <div className={styles.techTags}>
+                  <div className={styles.projectTechnologies}>
                     {project.technologies.map((tech, techIndex) => (
-                      <span key={techIndex} className={styles.techTag}>{tech}</span>
+                      <span key={techIndex} className={styles.projectTechTag}>{tech}</span>
                     ))}
                   </div>
+                  {isMobile() ? (
+                    expandedProject === project.title && (
+                      <p className={styles.projectDescription}>{project.description}</p>
+                    )
+                  ) : (
+                    <p className={styles.projectDescription}>{project.description}</p>
+                  )}
                 </div>
               </article>
             ))}
@@ -398,38 +471,33 @@ export default function Home() {
         <section className={styles.section} id="skills">
           <h2 className={styles.sectionTitle}>{getTranslation('skills.title', locale)}</h2>
           <div className={styles.skillsGrid}>
-            <div className={styles.skillCard}>
-              <h3>{getTranslation('skills.problemSolving', locale)}</h3>
-              <p>{getTranslation('skills.problemSolvingDescription', locale)}</p>
-            </div>
-            <div className={styles.skillCard}>
-              <h3>{getTranslation('skills.adaptability', locale)}</h3>
-              <p>{getTranslation('skills.adaptabilityDescription', locale)}</p>
-            </div>
-            <div className={styles.skillCard}>
-              <h3>{getTranslation('skills.timeManagement', locale)}</h3>
-              <p>{getTranslation('skills.timeManagementDescription', locale)}</p>
-            </div>
-            <div className={styles.skillCard}>
-              <h3>{getTranslation('skills.attentionToDetail', locale)}</h3>
-              <p>{getTranslation('skills.attentionToDetailDescription', locale)}</p>
-            </div>
-            <div className={styles.skillCard}>
-              <h3>{getTranslation('skills.teamwork', locale)}</h3>
-              <p>{getTranslation('skills.teamworkDescription', locale)}</p>
-            </div>
-            <div className={styles.skillCard}>
-              <h3>{getTranslation('skills.effectiveCommunication', locale)}</h3>
-              <p>{getTranslation('skills.effectiveCommunicationDescription', locale)}</p>
-            </div>
-            <div className={styles.skillCard}>
-              <h3>{getTranslation('skills.criticalThinking', locale)}</h3>
-              <p>{getTranslation('skills.criticalThinkingDescription', locale)}</p>
-            </div>
-            <div className={styles.skillCard}>
-              <h3>{getTranslation('skills.continuousLearning', locale)}</h3>
-              <p>{getTranslation('skills.continuousLearningDescription', locale)}</p>
-            </div>
+            {skills.map((skill, index) => (
+              <div 
+                key={index} 
+                className={styles.skillCard}
+                onClick={() => toggleSkill(skill.title || '')}
+              >
+                <div className={styles.skillHeader}>
+                  <h3>{skill.title}</h3>
+                  <div className={styles.technologies}>
+                    {skill.technologies.map((tech, techIndex) => (
+                      <span key={techIndex} className={styles.techTag}>{tech}</span>
+                    ))}
+                  </div>
+                </div>
+                {isMobile() ? (
+                  expandedSkill === skill.title && (
+                    <div className={styles.skillContent}>
+                      <p>{skill.description}</p>
+                    </div>
+                  )
+                ) : (
+                  <div className={styles.skillContent}>
+                    <p>{skill.description}</p>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </section>
       </main>
