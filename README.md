@@ -1,13 +1,23 @@
 # 🌐 Unai Ricco Moyano – Portfolio
 
-Este es el código fuente de mi portafolio personal. Desarrollado para mostrar mis proyectos, habilidades y experiencia como desarrollador front-end.
+Este es el código fuente de mi portafolio personal. Desarrollado para mostrar mis proyectos, habilidades y experiencia como desarrollador full-stack.
 
 ## 🛠 Tecnologías utilizadas
 
 - **Next.js** (React)
+- **TypeScript** (tipado estático)
 - **Leaflet** (para mostrar mi ubicación en el mapa)
 - **SendGrid** (para el formulario de contacto)
 - **Netlify** (despliegue)
+
+## 📐 Arquitectura
+
+El proyecto está estructurado de forma modular para mejorar la mantenibilidad y escalabilidad:
+
+- **Componentes**: Cada sección está encapsulada en su propio componente con su estado local
+- **Datos**: Los datos estáticos están centralizados en archivos dedicados
+- **Traducciones**: Sistema de internacionalización para soporte multiidioma
+- **Estado**: Gestión de estado local por componente para mejor encapsulación
 
 ## 🚀 ¿Qué incluye?
 
