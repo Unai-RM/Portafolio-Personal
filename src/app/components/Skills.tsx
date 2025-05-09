@@ -35,7 +35,7 @@ const Skills: React.FC<SkillsProps> = ({
             onClick={() => toggleSkill(skill.title || '')}
           >
             <div className={styles.skillHeader}>
-              <h3>{skill.title}</h3>
+              <h3>{getTranslation(skill.title || '', locale)}</h3>
               <div className={styles.technologies}>
                 {skill.technologies.map((tech, techIndex) => (
                   <span key={techIndex} className={styles.techTag}>{tech}</span>
@@ -45,12 +45,12 @@ const Skills: React.FC<SkillsProps> = ({
             {isMobileDevice ? (
               expandedSkill !== null && (
                 <div className={styles.skillContent}>
-                  <p>{skill.description}</p>
+                  <p>{getTranslation(skill.description || '', locale)}</p>
                 </div>
               )
             ) : (
               <div className={styles.skillContent}>
-                <p>{skill.description}</p>
+                <p>{getTranslation(skill.description || '', locale)}</p>
               </div>
             )}
           </div>

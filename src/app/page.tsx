@@ -252,13 +252,13 @@ export default function Home() {
         <Projects
           locale={locale}
           isMobileDevice={isMobileDevice}
-          projects={projects}
+          projects={projects(locale)}
         />
 
         <Skills
           locale={locale}
           isMobileDevice={isMobileDevice}
-          skills={skills}
+          skills={skills(locale)}
         />
       </main>
 

@@ -36,7 +36,7 @@ const Projects: React.FC<ProjectsProps> = ({
               onClick={() => toggleProject(project.title || '')}
             >
               <div className={styles.skillHeader}>
-                <h3>{project.title}</h3>
+                <h3>{getTranslation(project.title || '', locale)}</h3>
                 <div className={styles.technologies}>
                   {project.technologies.map((tech, techIndex) => (
                     <span key={techIndex} className={styles.techTag}>{tech}</span>
@@ -45,7 +45,7 @@ const Projects: React.FC<ProjectsProps> = ({
               </div>
               {isMobileDevice && expandedProject !== null && (
                 <div className={styles.skillContent}>
-                  <p>{project.description}</p>
+                  <p>{getTranslation(project.description || '', locale)}</p>
                 </div>
               )}
             </div>
@@ -66,18 +66,18 @@ const Projects: React.FC<ProjectsProps> = ({
             onClick={() => toggleProject(project.title || '')}
           >
             <div className={styles.projectContent}>
-              <h3 className={styles.projectTitle}>{project.title}</h3>
+              <h3 className={styles.projectTitle}>{getTranslation(project.title || '', locale)}</h3>
               <div className={styles.projectTechnologies}>
                 {project.technologies.map((tech, techIndex) => (
                   <span key={techIndex} className={styles.projectTechTag}>{tech}</span>
                 ))}
               </div>
               {!isMobileDevice && (
-                <p className={styles.projectDescription}>{project.description}</p>
+                <p className={styles.projectDescription}>{getTranslation(project.description || '', locale)}</p>
               )}
             </div>
             {isMobileDevice && expandedProject !== null && (
-              <p className={styles.projectDescription}>{project.description}</p>
+              <p className={styles.projectDescription}>{getTranslation(project.description || '', locale)}</p>
             )}
           </article>
         ))}

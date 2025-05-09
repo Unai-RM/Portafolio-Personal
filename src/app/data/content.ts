@@ -1,7 +1,21 @@
+import { getTranslation } from '../../translations';
+
 interface Technology {
   name: string;
   icon: string;
   color: string;
+}
+
+interface Project {
+  title: string;
+  description: string;
+  technologies: string[];
+}
+
+interface Skill {
+  title: string;
+  description: string;
+  technologies: string[];
 }
 
 export const technologies: Technology[] = [
@@ -101,39 +115,74 @@ export const toolsAndExtras = technologies.filter(tech =>
   ['SQL', 'REST APIs', 'Docker', 'GitHub'].includes(tech.name)
 );
 
-export const skills = [
+export const projects = (locale: string): Project[] => [
   {
-    title: 'Frontend Development',
-    technologies: ['React', 'Vue', 'TypeScript', 'HTML', 'CSS'],
-    description: 'Desarrollo de interfaces modernas y responsivas'
+    title: 'projects.title1',
+    description: 'projects.title1Description',
+    technologies: ['Laravel', 'Angular', 'Vue.js', 'SaaS']
   },
   {
-    title: 'Backend Development',
-    technologies: ['PHP', 'Node.js', 'Laravel', 'CodeIgniter'],
-    description: 'Desarrollo de APIs y servicios backend'
+    title: 'projects.title2',
+    description: 'projects.title2Description',
+    technologies: ['WebSockets', 'Backend', 'Frontend', 'CRON']
   },
   {
-    title: 'Database Management',
-    technologies: ['SQL', 'MySQL', 'PostgreSQL'],
-    description: 'Diseño y gestión de bases de datos'
+    title: 'projects.title3',
+    description: 'projects.title3Description',
+    technologies: ['REST APIs', 'Geolocation', 'Integration']
+  },
+  {
+    title: 'projects.title4',
+    description: 'projects.title4Description',
+    technologies: ['Docker', 'Git', 'GitHub Actions', 'CI/CD']
+  },
+  {
+    title: 'projects.title5',
+    description: 'projects.title5Description',
+    technologies: ['CodeIgniter', 'SQL', 'REST APIs']
   }
 ];
 
-export const projects = [
+export const skills = (locale: string): Skill[] => [
   {
-    title: 'Portfolio Personal',
-    technologies: ['Next.js', 'React', 'TypeScript'],
-    description: 'Portfolio personal con diseño moderno y responsivo'
+    title: 'skills.problemSolving',
+    description: 'skills.problemSolvingDescription',
+    technologies: ['Problem Solving', 'Critical Thinking', 'Decision Making']
   },
   {
-    title: 'Sistema de Gestión',
-    technologies: ['Laravel', 'Vue', 'MySQL'],
-    description: 'Sistema de gestión empresarial'
+    title: 'skills.adaptability',
+    description: 'skills.adaptabilityDescription',
+    technologies: ['Adaptability', 'Learning', 'Flexibility']
   },
   {
-    title: 'API REST',
-    technologies: ['Node.js', 'Express', 'PostgreSQL'],
-    description: 'API REST para aplicación móvil'
+    title: 'skills.timeManagement',
+    description: 'skills.timeManagementDescription',
+    technologies: ['Time Management', 'Organization', 'Prioritization']
+  },
+  {
+    title: 'skills.attentionToDetail',
+    description: 'skills.attentionToDetailDescription',
+    technologies: ['Attention to Detail', 'Accuracy', 'Precision']
+  },
+  {
+    title: 'skills.teamwork',
+    description: 'skills.teamworkDescription',
+    technologies: ['Teamwork', 'Collaboration', 'Communication']
+  },
+  {
+    title: 'skills.effectiveCommunication',
+    description: 'skills.effectiveCommunicationDescription',
+    technologies: ['Communication', 'Presentation', 'Listening']
+  },
+  {
+    title: 'skills.criticalThinking',
+    description: 'skills.criticalThinkingDescription',
+    technologies: ['Critical Thinking', 'Analysis', 'Problem Solving']
+  },
+  {
+    title: 'skills.continuousLearning',
+    description: 'skills.continuousLearningDescription',
+    technologies: ['Learning', 'Development', 'Growth']
   }
 ];
 
